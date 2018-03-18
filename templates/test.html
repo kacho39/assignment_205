@@ -1,0 +1,68 @@
+<html><head>
+    
+    <title> - My Webpage</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    
+  </head>
+  <body>
+    <div id="content">
+      <!-- sidebar -->
+	<a href="javascript:void(0)" onclick="openNav()">
+		<div class="main-menu-button">
+			<span class="bar bar-1"></span>
+			<span class="bar bar-2"></span>
+			<span class="bar bar-3"></span>
+		</div>
+	</a>
+	<a id="close-btn" href="javascript:void(0)" onclick="closeNav()" style="display: none;" "="">
+		<div class="main-menu-button">
+			<span class="bar bar-1"></span>
+			<span class="bar bar-2"></span>
+			<span class="bar bar-3"></span>
+		</div>
+	</a>
+	
+	<nav id="main-nav">
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a href="selection">Forum</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</nav>
+      
+		<section class="s1">
+			<h1>Welcome to Talk</h1>
+		</section>
+
+		<section class="s2">
+			<h1>About Me</h1>
+		</section>
+
+		<!-- <section class="s3">
+			<h1>My Works</h1>
+		</section> -->
+	
+    </div>
+    <div id="footer">
+      
+      <!-- &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>. -->
+      
+    </div>
+    <div id="javascript">
+      
+		<script type="text/javascript">
+			function openNav() {
+				var x = document.getElementById("main-nav");
+				x.style.width = "200px";
+				document.getElementById('close-btn').style.display = "block";
+			}
+			function closeNav() {
+				var x = document.getElementById("main-nav");
+				x.style.width = "0";
+				document.getElementById('close-btn').style.display = "none";
+			}
+		</script>
+	
+    </div>
+  
+</body></html>

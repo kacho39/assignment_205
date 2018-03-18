@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}{{ language|title }}{% endblock %}
+
+{% block css%}
+	<style type="text/css">
+		.post {
+			min-height: 200px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    		text-align: center;
+    		background-color: white;
+		}
+		.vertical-middle {
+			vertical-align: middle;
+			position: absolute;
+		    top: 50%;
+		    transform: translate(-50%,-50%);
+		    left: 50%;
+		}
+		.row {
+			min-height: 200px;
+			margin-top: 20px;
+		}
+		.top-description {
+			padding-top: 20px;
+		}
+		.to-post {
+			width: 100%;
+			border: 0px;
+			padding: 20px;
+			resize: none;
+			height: 100%;
+			outline: none;
+		}
+		.post-btn {
+			position: absolute;
+		    right: 26px;
+		    bottom: 10px;
+		    background-color: #007bff;
+		    color: white;
+		    width: 100px;
+		    height: 40px;
+		    border-radius: 5px;
+		    border: 0;
+		    cursor: pointer;
+		}
+		.capitalize {
+			text-transform: capitalize;
+		}
+		.comment-box {
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    		text-align: center;
+    		background-color: white;
+    		cursor: pointer;
+		}
+		.comment-input {
+			outline: none;
+    		border: none;
+		}
+		.comment-btn {
+			background-color: #007bff;
+		    color: white;
+		    border-radius: 5px;
+		    border: 0;
+		    cursor: pointer;
+		}
+		.comments {
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    		text-align: center;
+    		background-color: white;
+    		/*cursor: pointer;*/
+		}
+		.comments-h6 {
+			margin-bottom: 0;
+    		background-color: aliceblue;
+		}
+		.comment {
+			display: inline;
+		}
+		.comment-username {
+			float: left;
+    		width: 40%;
+		}
+		.comment-text {
+			float: left;
+    		width: 60%;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+	<div id="main">
+		<div class="container top-description">
+			<center>
+				<h1 class="capitalize">{{language}}</h1>
+			</center>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-0 col-md-2"></div>
+					<div class="col-sm-12 col-md-8">
+						<h1>Say something</h1>
+						<div class="post">
+							<div>
+								<form action="{{ url_for('post') }}" method="POST">
+									<textarea class="to-post" name="detail" cols="40" rows="7" placeholder="Type here..."></textarea>
+									<input id="post-btn" class="post-btn" type="submit" name="post">
+									<input type="hidden" name="language" value="{{language}}">
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			{% for post in posts %}
+				<div class="row" data-value="{{post[3]}}">
+					<div class="col-sm-0 col-md-2"></div>
+					<div class="col-sm-12 col-md-8 center-8">
+						<h1>Post {{posts.index(post) + 1}}</h1>
+						<div class="post">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="vertical-middle">
+										<img src="../static/img/{{post[2]}}.png">
+										<p>{{post[0]}}</p>
+									</div>
+								</div>
+								<div class="col-sm-8">
+									<div class="vertical-middle">
+										<p>{{post[1]}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% if post[5] is defined and post[5] != None %}
+							<div class="comments">
+								<div>
+									<h6 class="comments-h6">Comment: </h6>
+									<span class="comment-username"><p class="comment">{{post[4]}}: </p></span>
+									<span class="comment-text"><p class="comment">{{post[5]}}</p></span>
+								</div>
+							</div>
+						{% endif %}
+						<div class="comment-box">
+							<p class="comment-box-title">Leave comment</p>
+							<form class="comment-form" action="comment" method="POST" style="display: none;" id="test1">
+								<input class="comment-input" type="text" name="comment" placeholder="Leave comment here...">
+								<input type="hidden" name="language" value="{{language}}">
+								<input id="post_id-{{post[3]}}" class="post-id" type="hidden" name="post_id" value="">
+								<input class="comment-btn" type="submit" name="leave_comment">
+							</form>
+						</div>
+					</div>
+					<div class="col-sm-0 col-md-2"></div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript">
+		$('.comment-box').click(function() {
+			$(this).children('.comment-box-title').hide();
+			$(this).children('.comment-form').show();
+			post_id = $(this).parent('.center-8').parent('.row').data('value');
+			console.log(post_id);
+			// test1 = $(this).children('.comment-form').id;
+			$('#post_id-' + post_id).val(post_id);
+		});
+	</script>
+{% endblock %}
